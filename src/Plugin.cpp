@@ -92,15 +92,17 @@ namespace HEAL
 
 	bool CanLinkify(RE::SpellItem* const& theSpell)
 	{
+		if (theSpell->effects.empty())
+			return false;
 		if (theSpell->HasKeyword(HEAL::FORMS::GetSingleton().KywdHealerSpellFF))
 			return false;
 		if (theSpell->equipSlot == HEAL::FORMS::GetSingleton().EquipSlotBoth)
 			return false;
 		if (theSpell->data.delivery != RE::MagicSystem::Delivery::kSelf)
 			return false;
-		if (theSpell->effects.empty())
-			return false;
 		if (theSpell->data.castingType != RE::MagicSystem::CastingType::kFireAndForget)
+			return false;
+		if (theSpell->effects.front()->baseEffect->HasArchetype(RE::EffectSetting::Archetype::kBoundWeapon))
 			return false;
 
 		return true;
