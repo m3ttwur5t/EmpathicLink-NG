@@ -5,20 +5,20 @@ namespace HEAL
 {
 	bool BindPapyrusFunctions(RE::BSScript::IVirtualMachine* vm)
 	{
-		vm->RegisterFunction("WhichSpellCastMe", "AllylinkScriptExtender", WhichSpellCastMe);
-		vm->RegisterFunction("GetRealSpell", "AllylinkScriptExtender", GetRealSpell);
-		vm->RegisterFunction("GetFakeSpell", "AllylinkScriptExtender", GetFakeSpell);
+		vm->RegisterFunction("GetSourceSpell", "EmpathicLinkScriptExtender", GetSourceSpell);
+		vm->RegisterFunction("GetRealSpell", "EmpathicLinkScriptExtender", GetRealSpell);
+		vm->RegisterFunction("GetFakeSpell", "EmpathicLinkScriptExtender", GetFakeSpell);
 
 		return true;
 	}
 
-	RE::SpellItem* WhichSpellCastMe(RE::StaticFunctionTag*, RE::ActiveEffect* effect)
+	RE::SpellItem* GetSourceSpell(RE::StaticFunctionTag*, RE::ActiveEffect* effect)
 	{
 		if (!effect || !effect->spell) {
-			logger::error("WhichSpellCastMe: EFFECT/SPELL WAS NULL");
+			logger::error("GetSourceSpell: EFFECT/SPELL WAS NULL");
 		}
 		const auto& ret = effect->spell->As<RE::SpellItem>();
-		logger::info("WhichSpellCastMe: 0x{:08X}", ret ? ret->GetFormID() : 0x0);
+		logger::info("GetSourceSpell: 0x{:08X}", ret ? ret->GetFormID() : 0x0);
 		return ret;
 	}
 

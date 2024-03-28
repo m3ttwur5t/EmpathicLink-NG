@@ -6,8 +6,7 @@
 namespace HEAL
 {
 	bool BindPapyrusFunctions(RE::BSScript::IVirtualMachine* vm);
-	int WhichHandCastMe(RE::StaticFunctionTag*, RE::ActiveEffect* effect);
-	RE::SpellItem* WhichSpellCastMe(RE::StaticFunctionTag*, RE::ActiveEffect* effect);
+	RE::SpellItem* GetSourceSpell(RE::StaticFunctionTag*, RE::ActiveEffect* effect);
 	RE::SpellItem* GetRealSpell(RE::StaticFunctionTag*, RE::SpellItem* effect);
 	RE::SpellItem* GetFakeSpell(RE::StaticFunctionTag*, RE::SpellItem* realSpell, int hand);
 
@@ -20,7 +19,7 @@ namespace HEAL
 		class Plugin
 		{
 		private:
-			const std::string iniPath = "Data/SKSE/Plugins/_m3MaintainedMagicGeneratedMap.ini";
+			const std::string iniPath = "Data/SKSE/Plugins/EmpathicLinkNG.ini";
 			CSimpleIniA Ini;
 
 			Plugin()
@@ -139,11 +138,11 @@ namespace HEAL
 			return instance;
 		}
 
-		RE::SpellItem* SpelDummyEffectTemplate = RE::TESDataHandler::GetSingleton()->LookupForm<RE::SpellItem>(0x80A, "Allylink.esp"sv);
+		RE::SpellItem* SpelDummyEffectTemplate = RE::TESDataHandler::GetSingleton()->LookupForm<RE::SpellItem>(0x80A, "EmpathicLink.esp"sv);
 
-		RE::SpellItem* SpelHealerTemplateFFLeft = RE::TESDataHandler::GetSingleton()->LookupForm<RE::SpellItem>(0x800, "Allylink.esp"sv);
-		RE::SpellItem* SpelHealerTemplateFFRight = RE::TESDataHandler::GetSingleton()->LookupForm<RE::SpellItem>(0x80C, "Allylink.esp"sv);
-		RE::BGSKeyword* KywdHealerSpellFF = RE::TESDataHandler::GetSingleton()->LookupForm<RE::BGSKeyword>(0x802, "Allylink.esp"sv);
+		RE::SpellItem* SpelHealerTemplateFFLeft = RE::TESDataHandler::GetSingleton()->LookupForm<RE::SpellItem>(0x800, "EmpathicLink.esp"sv);
+		RE::SpellItem* SpelHealerTemplateFFRight = RE::TESDataHandler::GetSingleton()->LookupForm<RE::SpellItem>(0x80C, "EmpathicLink.esp"sv);
+		RE::BGSKeyword* KywdHealerSpellFF = RE::TESDataHandler::GetSingleton()->LookupForm<RE::BGSKeyword>(0x802, "EmpathicLink.esp"sv);
 		RE::BGSEquipSlot* EquipSlotBoth = RE::TESForm::LookupByID<RE::BGSEquipSlot>(0x13F45);
 
 	private:
