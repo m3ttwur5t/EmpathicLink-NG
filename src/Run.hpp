@@ -2,7 +2,6 @@
 
 #include "Bimap.h"
 #include <SimpleIni.h>
-#include "FFIDMAN_API.hpp"
 
 namespace HEAL
 {
@@ -119,25 +118,6 @@ namespace HEAL
 	class FORMS
 	{
 	public:
-		static const RE::FormID FORMID_OFFSET_BASE = 0xFF077700;
-		RE::FormID CurrentOffset;
-
-		void SetOffset(RE::FormID offset)
-		{
-			CurrentOffset = offset;
-		}
-
-		RE::FormID NextFormID() const
-		{
-			static auto idman = FFIDMAN_API::Manager::GetInstance();
-			if (idman->IsLoaded()) {
-				return idman->GetNextFormID(PLUGIN_NAME.data());
-			} else {
-				static RE::FormID current = 0;
-				return FORMID_OFFSET_BASE + (++current) + CurrentOffset;
-			}
-		}
-
 		static FORMS& GetSingleton()
 		{
 			static FORMS instance;

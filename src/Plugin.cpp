@@ -58,7 +58,6 @@ namespace HEAL
 			return nullptr;
 
 		auto healerSpell = spellFactory->Create();
-		healerSpell->SetFormID(HEAL::FORMS::GetSingleton().NextFormID(), false);
 
 		healerSpell->SetFormEditorID(std::format("{}_fake{}", theSpell->GetFormEditorID(), hand).c_str());
 
