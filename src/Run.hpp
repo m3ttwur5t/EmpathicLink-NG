@@ -2,9 +2,12 @@
 
 #include "Bimap.h"
 #include <SimpleIni.h>
+#include "FFIDMAN_API.hpp"
 
 namespace HEAL
 {
+	constexpr std::string_view PLUGIN_NAME = Plugin::NAME;
+
 	bool BindPapyrusFunctions(RE::BSScript::IVirtualMachine* vm);
 	RE::SpellItem* GetSourceSpell(RE::StaticFunctionTag*, RE::ActiveEffect* effect);
 	RE::SpellItem* GetRealSpell(RE::StaticFunctionTag*, RE::SpellItem* effect);
@@ -19,13 +22,13 @@ namespace HEAL
 		class Plugin
 		{
 		private:
-			const std::string iniPath = "Data/SKSE/Plugins/EmpathicLinkNG.ini";
+			const std::string_view iniPath = std::format("Data/SKSE/Plugins/{}.ini", PLUGIN_NAME);
 			CSimpleIniA Ini;
 
 			Plugin()
 			{
 				Ini.SetUnicode();
-				Ini.LoadFile(iniPath.c_str());
+				Ini.LoadFile(iniPath.data());
 			}
 
 		public:
@@ -100,7 +103,7 @@ namespace HEAL
 
 			void Save()
 			{
-				Ini.SaveFile(iniPath.c_str());
+				Ini.SaveFile(iniPath.data());
 			}
 
 			Plugin(Plugin const&) = delete;
@@ -111,8 +114,6 @@ namespace HEAL
 	namespace CACHE
 	{
 		inline BiMap<std::pair<RE::SpellItem*, int>, RE::SpellItem*> SpellToHealerSpell;
-
-		
 	}
 
 	class FORMS
@@ -128,8 +129,13 @@ namespace HEAL
 
 		RE::FormID NextFormID() const
 		{
-			static RE::FormID current = 0;
-			return FORMID_OFFSET_BASE + (++current) + CurrentOffset;
+			static auto idman = FFIDMAN_API::Manager::GetInstance();
+			if (idman->IsLoaded()) {
+				return idman->GetNextFormID(PLUGIN_NAME.data());
+			} else {
+				static RE::FormID current = 0;
+				return FORMID_OFFSET_BASE + (++current) + CurrentOffset;
+			}
 		}
 
 		static FORMS& GetSingleton()
