@@ -118,6 +118,20 @@ namespace HEAL
 	class FORMS
 	{
 	public:
+		static const RE::FormID FORMID_OFFSET_BASE = 0xFF0FF000;
+		RE::FormID CurrentOffset;
+
+		void SetOffset(RE::FormID offset)
+		{
+			CurrentOffset = offset;
+		}
+
+		RE::FormID NextFormID() const
+		{
+			static RE::FormID current{ 0x0 };
+			return FORMID_OFFSET_BASE + (++current) + CurrentOffset;
+		}
+
 		static FORMS& GetSingleton()
 		{
 			static FORMS instance;

@@ -59,6 +59,7 @@ namespace HEAL
 
 		auto healerSpell = spellFactory->Create();
 
+		healerSpell->SetFormID(FORMS::GetSingleton().NextFormID(), false);
 		healerSpell->SetFormEditorID(std::format("{}_fake{}", theSpell->GetFormEditorID(), hand).c_str());
 
 		healerSpell->avEffectSetting = theSpell->avEffectSetting;
