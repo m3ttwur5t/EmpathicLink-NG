@@ -118,7 +118,7 @@ namespace HEAL
 	class FORMS
 	{
 	public:
-		static const RE::FormID FORMID_OFFSET_BASE = 0xFF0FF000;
+		static const RE::FormID FORMID_OFFSET_BASE = 0xFF01FF00;
 		RE::FormID CurrentOffset;
 
 		void SetOffset(RE::FormID offset)
